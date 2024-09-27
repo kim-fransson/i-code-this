@@ -2,6 +2,28 @@
 
 import CloseIcon from '@/components/icons/basic/CloseIcon.vue';
 import ChristmasTreeIcon from '@/components/icons/ChristmasTreeIcon.vue';
+import { onMounted, ref } from 'vue';
+
+const NUMBER_OF_SNOWFLAKES = 150;
+const snowflakes = ref([]);
+
+onMounted(() => {
+    for (let i = 0; i < NUMBER_OF_SNOWFLAKES; i++) {
+        const leftPosition = Math.random() * 100;
+        const animationDuration = Math.random() * 5 + 5; // Between 5 and 10 seconds
+        const animationDelay = Math.random() * 5;
+
+        const snowflake = {
+            style: {
+                left: `${leftPosition}%`,
+                animationDuration: `${animationDuration}s`,
+                animationDelay: `${animationDelay}s`,
+            },
+        };
+
+        snowflakes.value.push(snowflake);
+    }
+})
 
 </script>
 
@@ -9,6 +31,12 @@ import ChristmasTreeIcon from '@/components/icons/ChristmasTreeIcon.vue';
     <div class="challenge-container">
         <div class="challenge-content">
             <div class="snowy-landscape">
+                <div class="snowflakes">
+                    <div v-for="(snowflake, index) in snowflakes" :key="index" class="snowflake"
+                        :style="snowflake.style">
+                        ❅
+                    </div>
+                </div>
                 <div class="dialog">
                     <div class="content">
                         <header>
@@ -21,7 +49,8 @@ import ChristmasTreeIcon from '@/components/icons/ChristmasTreeIcon.vue';
                             <strong>50% off on your Yearly Premium Plan</strong>
                         </div>
 
-                        <button class="cta-button">GET YOUR GIFT</button>
+                        <button class="cta-button">GET YOUR
+                            GIFT</button>
                         <button class="close-button">
                             <CloseIcon />
                         </button>
@@ -57,6 +86,7 @@ import ChristmasTreeIcon from '@/components/icons/ChristmasTreeIcon.vue';
 }
 
 .snowy-landscape {
+    position: relative;
     background: #eff0f3;
     height: 100%;
     display: flex;
@@ -65,7 +95,36 @@ import ChristmasTreeIcon from '@/components/icons/ChristmasTreeIcon.vue';
     padding: 12px;
 }
 
+.snowflakes {
+    position: absolute;
+    height: 100%;
+    width: 70%;
+    pointer-events: none;
+    overflow: hidden;
+
+    .snowflake {
+        color: white;
+        font-size: 10px;
+        position: absolute;
+        top: -10%;
+        user-select: none;
+        animation: fall linear infinite;
+        opacity: 0.8;
+    }
+
+    @keyframes fall {
+        0% {
+            transform: translateY(-100px) translateX(0);
+        }
+
+        100% {
+            transform: translateY(100vh) translateX(100px);
+        }
+    }
+}
+
 .dialog {
+    z-index: 10;
     border: none;
     border-radius: 4px;
     border-top-right-radius: 24px;
@@ -133,14 +192,16 @@ import ChristmasTreeIcon from '@/components/icons/ChristmasTreeIcon.vue';
             }
         }
 
+
         .cta-button {
+            width: clamp(0%, 215px, 100%);
+
             border: none;
             text-transform: uppercase;
             border-radius: 4px;
             font-weight: 600;
             letter-spacing: 0.9px;
             padding: 20px;
-            width: clamp(0%, 215px, 100%);
             color: #f3f4f5;
             font-size: 13px;
             box-shadow: 0px 20px 40px 5px rgba(36, 46, 76, 0.24);
@@ -150,6 +211,7 @@ import ChristmasTreeIcon from '@/components/icons/ChristmasTreeIcon.vue';
                 padding: 12px;
             }
         }
+
 
         .close-button {
             position: absolute;
