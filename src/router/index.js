@@ -4,6 +4,7 @@ import HomeView from '@/views/HomeView.vue'
 import DadJokes from '@/views/DadJokes.vue'
 import ChallengeLayout from '@/layouts/ChallengeLayout.vue'
 import TodoList from '@/views/TodoList.vue'
+import AnalogClock from '@/views/AnalogClock.vue'
 
 export const challenges = [
   {
@@ -20,6 +21,11 @@ export const challenges = [
     path: 'todo-list',
     name: 'todo list',
     component: TodoList
+  },
+  {
+    path: 'clock',
+    name: 'clock',
+    component: AnalogClock
   }
 ]
 
