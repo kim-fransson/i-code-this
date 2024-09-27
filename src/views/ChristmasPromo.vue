@@ -28,67 +28,40 @@ onMounted(() => {
 </script>
 
 <template>
-    <div class="challenge-container">
-        <div class="challenge-content">
-            <div class="snowy-landscape">
-                <div class="snowflakes">
-                    <div v-for="(snowflake, index) in snowflakes" :key="index" class="snowflake"
-                        :style="snowflake.style">
-                        ❅
-                    </div>
-                </div>
-                <div class="dialog">
-                    <div class="content">
-                        <header>
-                            <ChristmasTreeIcon />
-                            <h2>Merry Christmas!</h2>
-                        </header>
+    <div class="snowy-landscape">
+        <div class="snowflakes">
+            <div v-for="(snowflake, index) in snowflakes" :key="index" class="snowflake" :style="snowflake.style">
+                ❅
+            </div>
+        </div>
+        <div class="dialog">
+            <div class="content">
+                <header>
+                    <ChristmasTreeIcon />
+                    <h2>Merry Christmas!</h2>
+                </header>
 
-                        <div class="body">
-                            <p>You completed all your December's tasks so we decided to get you a gift:</p>
-                            <strong>50% off on your Yearly Premium Plan</strong>
-                        </div>
-
-                        <button class="cta-button">GET YOUR
-                            GIFT</button>
-                        <button class="close-button">
-                            <CloseIcon />
-                        </button>
-                    </div>
+                <div class="body">
+                    <p>You completed all your December's tasks so we decided to get you a gift:</p>
+                    <strong>50% off on your Yearly Premium Plan</strong>
                 </div>
+
+                <button class="cta-button">GET YOUR
+                    GIFT</button>
+                <button class="close-button">
+                    <CloseIcon />
+                </button>
             </div>
         </div>
     </div>
 </template>
 
 <style lang="scss" scoped>
-.challenge-container {
-    height: 100dvh;
-    background: #2c2446;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-}
-
-.challenge-content {
-    width: 100%;
-    aspect-ratio: 4 / 3;
-    max-height: 100vh;
-}
-
-@media (min-aspect-ratio: 4 / 3) {
-
-    .challenge-content {
-        height: 100vh;
-        width: auto;
-    }
-}
-
 .snowy-landscape {
     position: relative;
     background: #eff0f3;
     height: 100%;
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
