@@ -1,6 +1,6 @@
 <script setup>
 import FadeTransition from '@/components/transitions/FadeTransition.vue';
-import { computed, ref, TransitionGroup } from 'vue';
+import { computed, ref, useTemplateRef, watchEffect } from 'vue';
 import { onClickOutside } from '@vueuse/core'
 
 const currentId = ref(2);
@@ -13,6 +13,12 @@ const showModal = ref(false);
 const newTodo = ref();
 
 const modal = ref(null)
+const textField = useTemplateRef('textField')
+
+const openModal = () => {
+    showModal.value = true;
+}
+
 onClickOutside(modal, () => showModal.value = false)
 
 const toggleItem = (id) => {
@@ -31,6 +37,12 @@ const addNewTodo = () => {
     newTodo.value = ''
     showModal.value = false
 }
+
+watchEffect(() => {
+    if (showModal.value && textField.value) {
+        textField.value.focus();
+    }
+});
 
 const numberOfTasks = computed(() => tasks.value.filter(item => !item.done).length)
 
@@ -76,7 +88,7 @@ const todaysDate = date.toLocaleDateString('en-US', {
                 </div>
             </li>
         </TransitionGroup>
-        <button @click="() => showModal = true" id="add-task-btn" class="add-task-btn"
+        <button @click="() => openModal()" id="add-task-btn" class="add-task-btn"
             aria-label="Open the modal to prompt for new tasks to add">Add
             new to-do</button>
     </div>
@@ -86,7 +98,7 @@ const todaysDate = date.toLocaleDateString('en-US', {
         <div v-if="showModal" id="modal-wrapper" class="modal-wrapper">
             <div ref="modal" id="modal" class="modal">
                 <h2>What task would you like to add?</h2>
-                <input v-model="newTodo" type="text" id="new-task-input" class="new-task-input">
+                <input ref="textField" v-model="newTodo" type="text" id="new-task-input" class="new-task-input">
                 <button :disabled="!newTodo" @click="() => addNewTodo()" id="confirm-task-btn" class="confirm-task-btn"
                     aria-label="Confirm the addition of the new task">Add
                     task</button>
