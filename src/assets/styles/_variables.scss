@@ -1,0 +1,7 @@
+$sm-breakpoint: 640px;
+
+@mixin forSmallScreen {
+  @media screen and (max-width: $sm-breakpoint) {
+    @content;
+  }
+}
